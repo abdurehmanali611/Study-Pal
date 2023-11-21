@@ -1,17 +1,26 @@
-import { View, Text, Image, StyleSheet, ScrollView, Pressable} from 'react-native'
-import React from 'react'
+import { View, Text, Image, StyleSheet, ScrollView, Pressable, TextInput, FlatList, Alert} from 'react-native'
+import React, { useState } from 'react'
 
 const Home = () =>{
+
   return <ScrollView>
     <View>
-      <View>
+    <View style = {styles.profile_search}>
+        <View>
         <Pressable>
         <Image 
         source={require('../assets/profile.png')}
         style = {styles.profile}
         />
         </Pressable>
-    </View>
+        </View>
+        <View style = {styles.search}>
+        <TextInput 
+        style = {styles.searchtext}
+        placeholder='search department'
+        />
+      </View>
+      </View>
     <View style = {styles.titleparent}>
         <Text style = {styles.title}>Study Pal</Text>
     </View>
@@ -29,16 +38,12 @@ const Home = () =>{
     </View>
     <View style = {styles.textparent}>
       <Text style = {styles.textpart}>
-        Lorem ipsum dolor sit amet consectetur 
-        adipisicing elit. Totam officiis deserunt, 
-        ducimus nobis nam rerum corporis! Veritatis, 
-        voluptatem! Commodi dolorum consequuntur 
-        aliquid cumque. Deleniti aliquam reprehenderit 
-        possimus, totam natus odio?
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Delectus repellat totam repellendus eveniet quod debitis. Recusandae expedita commodi, autem, eveniet iure dignissimos exercitationem fugit praesentium, ipsum quasi nisi nemo placeat.
       </Text>
     </View>
     </View>
     </ScrollView>
+  
 }
 
 const styles = StyleSheet.create ({
@@ -46,10 +51,33 @@ const styles = StyleSheet.create ({
         width: 50, 
         height: 50,
         marginHorizontal: 20, 
-        marginVertical: 10
+        marginVertical: 20
+    },
+    searchimage: {
+      width: 50,
+      height: 50,
+      borderRadius: 20,
+      marginHorizontal: 35
+    },
+    profile_search: {
+      display: 'flex',
+      flexDirection: 'row'
+    },
+    search: {
+       marginHorizontal: 20,
+       marginVertical: 20,
+       backgroundColor: `rgb(10,10,10)`,
+       borderRadius: 20,
+       width: 270,
+       height: 50,
+       display: 'flex',
+       flexDirection: 'row'
+    },
+    searchtext: {
+       paddingLeft: 10
     },
     titleparent: {
-      marginTop: 10
+      marginTop: 20
     },
     title: {
       textAlign: 'center', 
@@ -59,13 +87,10 @@ const styles = StyleSheet.create ({
       width: 350,
       height: 300,
       marginHorizontal: 20,
-      marginVertical: 40
+      marginVertical: 30
     },
     textpart: {
       textAlign: 'center'
-    },
-    textparent: {
-      marginBottom: 20
     }
 })
 

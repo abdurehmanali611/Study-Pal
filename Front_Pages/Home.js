@@ -1,25 +1,61 @@
-import { View, Text, Image, StyleSheet, ScrollView, Pressable, TextInput, FlatList, Alert} from 'react-native'
+import { View, Text, Image, StyleSheet, FlatList, Alert, ScrollView, TouchableOpacity} from 'react-native'
 import React, { useState } from 'react'
 
 const Home = () =>{
 
+  const [menubtn, setMenubtn] = useState(true)
+  const [pages, setPages] = useState(false)
+  const menupressed = () => {
+
+      setMenubtn(!menubtn)
+      setPages(!pages)
+
+  }
+
   return <ScrollView>
     <View>
-    <View style = {styles.profile_search}>
+    <View style = {styles.header_images}>
         <View>
-        <Pressable>
+        <TouchableOpacity>
         <Image 
         source={require('../assets/profile.png')}
         style = {styles.profile}
         />
-        </Pressable>
+        </TouchableOpacity>
         </View>
-        <View style = {styles.search}>
-        <TextInput 
-        style = {styles.searchtext}
-        placeholder='search department'
-        />
-      </View>
+        <View>
+          {menubtn ? (
+            <TouchableOpacity onPress={menupressed}>
+              <Image 
+              source={require('../assets/menu.jpg')}
+              style = {styles.menuimage}
+              />
+            </TouchableOpacity>
+          ):
+           pages && (
+            <View>
+              <TouchableOpacity onPress={menupressed}>
+               <Image 
+                source={require('../assets/close.jpg')}
+                style = {styles.menuimage}
+               />
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Text>Software Engineering</Text>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Text>Computer Science</Text>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Text>Infomation Technology</Text>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Text>Information System</Text>
+              </TouchableOpacity>
+              </View>
+           )
+           }
+        </View>
       </View>
     <View style = {styles.titleparent}>
         <Text style = {styles.title}>Study Pal</Text>
@@ -36,13 +72,14 @@ const Home = () =>{
       style = {styles.study}
       />
     </View>
-    <View style = {styles.textparent}>
+    <View>
       <Text style = {styles.textpart}>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Delectus repellat totam repellendus eveniet quod debitis. Recusandae expedita commodi, autem, eveniet iure dignissimos exercitationem fugit praesentium, ipsum quasi nisi nemo placeat.
       </Text>
     </View>
     </View>
     </ScrollView>
+   
   
 }
 
@@ -53,31 +90,19 @@ const styles = StyleSheet.create ({
         marginHorizontal: 20, 
         marginVertical: 20
     },
-    searchimage: {
-      width: 50,
-      height: 50,
-      borderRadius: 20,
-      marginHorizontal: 35
-    },
-    profile_search: {
+    header_images: {
       display: 'flex',
       flexDirection: 'row'
     },
-    search: {
-       marginHorizontal: 20,
-       marginVertical: 20,
-       backgroundColor: `rgb(10,10,10)`,
-       borderRadius: 20,
-       width: 270,
-       height: 50,
-       display: 'flex',
-       flexDirection: 'row'
-    },
-    searchtext: {
-       paddingLeft: 10
+    menuimage: {
+      marginHorizontal: 220,
+      marginVertical: 20,
+      width: 50,
+      height: 50,
+      
     },
     titleparent: {
-      marginTop: 20
+      marginTop: 10
     },
     title: {
       textAlign: 'center', 

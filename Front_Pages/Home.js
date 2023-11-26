@@ -3,8 +3,11 @@ import { View, Text,
   ScrollView, TouchableOpacity, TextInput} 
   from 'react-native'
 import React, { useState } from 'react'
+import { useRoute } from '@react-navigation/native'
 
-const Home = () =>{
+const Home = ({navigation}) =>{
+
+  const router = useRoute()
 
   const [menubtn, setMenubtn] = useState(true)
   const [profilebtn, setProfilebtn] = useState(true)
@@ -16,6 +19,11 @@ const Home = () =>{
       setMenubtn(!menubtn)
       setPages(!pages)
 
+  }
+
+  const registerprofile = () => {
+
+     navigation.navigate('Profile')
   }
 
   const profilepressed = () => {
@@ -38,12 +46,36 @@ const Home = () =>{
             />
           </TouchableOpacity>
           <View style = {styles.profileelement}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={registerprofile}>
             <Image
             source={require('../assets/profile.png')}
             style = {styles.back}
             />
           </TouchableOpacity>
+          <View style = {styles.parameter}>
+          <Text style = {{textDecorationLine: 'underline', fontSize: 18}}>Profile Name: </Text>
+          <Text>{router.params.param1}</Text>
+          </View>
+          <View style = {styles.parameter}>
+          <Text style = {{textDecorationLine: 'underline', fontSize: 18}}>Last Name: </Text>
+          <Text>{router.params.param2}</Text>
+          </View>
+          <View style = {styles.parameter}>
+          <Text style = {{textDecorationLine: 'underline', fontSize: 18}}>Email: </Text>
+          <Text>{router.params.param3}</Text>
+          </View>
+          <View style = {styles.parameter}>
+          <Text style = {{textDecorationLine: 'underline', fontSize: 18}}>Password: </Text>
+          <Text>{router.params.param4}</Text>
+          </View>
+          <View style = {styles.parameter}>
+          <Text style = {{textDecorationLine: 'underline', fontSize: 18}}>University: </Text>
+          <Text>{router.params.param5}</Text>
+          </View>
+          <View>
+          <Text style = {{textAlign: 'center',textDecorationLine: 'underline', fontSize: 18}}>Biography: </Text>
+          <Text style = {{marginHorizontal: 5}}>{router.params.param6}</Text>
+          </View>
           </View>
           </View>
         ):
@@ -134,7 +166,12 @@ const styles = StyleSheet.create ({
       zIndex: 2
     },
     profileelement: {
-      marginHorizontal: 50
+      marginHorizontal: 15,
+      backgroundColor: '#994D1C',
+      width: 310,
+      borderRadius: 20,
+      alignItems: 'center',
+      height: 350
     },
     profileoption: {
       position: 'absolute',
@@ -147,7 +184,8 @@ const styles = StyleSheet.create ({
       width: 280,
       alignItems: 'center',
       justifyContent: 'center',
-      marginHorizontal: 80
+      marginHorizontal: 80,
+      marginVertical: 5
     },
     textmenu: {
       fontSize: 17,
@@ -172,6 +210,10 @@ const styles = StyleSheet.create ({
     },
     titleparent: {
       marginTop: 10
+    },
+    parameter: {
+     display: 'flex',
+     flexDirection: 'row'
     },
     title: {
       textAlign: 'center', 

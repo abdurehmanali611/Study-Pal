@@ -27,7 +27,7 @@ const Sign_Up = ({navigation}) => {
         ]
         )
       }else {
-        navigation.navigate('Home')
+        navigation.navigate('Profile')
       }
    }
 

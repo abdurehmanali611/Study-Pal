@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import Home from "../Front_Pages/Home";
+import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from "react-native";
 
 const Profile_create = ({navigation}) => {
 
@@ -53,12 +52,12 @@ const Profile_create = ({navigation}) => {
         })
       }
     }
-   
+  
     return <ScrollView 
     showsVerticalScrollIndicator = {false}
     style = {styles.overall}>
         <View style = {styles.name}>
-            <Text>Please create your Profile here</Text>
+            <Text style = {styles.header}>Please create your Profile here</Text>
         <Text style = {styles.texts}>Profile Name</Text>
         <TextInput 
         placeholder="Profile name"
@@ -146,6 +145,15 @@ const styles = StyleSheet.create ({
         borderRadius: 20,
         textAlign: 'center',
         marginVertical: 10
+    },
+    header: {
+       textAlign: 'center',
+       marginVertical: 10,
+       fontSize: 20,
+       backgroundColor: '#7ED7C1',
+       fontStyle: 'italic',
+       borderRadius: 20,
+       width: 340
     },
     button : {
         backgroundColor: '#508D69',

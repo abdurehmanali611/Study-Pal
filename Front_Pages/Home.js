@@ -1,6 +1,6 @@
 import { View, Text, 
   Image, StyleSheet, 
-  ScrollView, TouchableOpacity, TextInput} 
+  ScrollView, TouchableOpacity} 
   from 'react-native'
 import React, { useState } from 'react'
 import { useRoute } from '@react-navigation/native'
@@ -46,12 +46,20 @@ const Home = ({navigation}) =>{
             />
           </TouchableOpacity>
           <View style = {styles.profileelement}>
+          <View style = {{display: 'flex', flexDirection: 'row'}}>
           <TouchableOpacity onPress={registerprofile}>
             <Image
             source={require('../assets/profile.png')}
             style = {styles.back}
             />
           </TouchableOpacity>
+          <TouchableOpacity>
+            <Image
+            source={require('../assets/camera.jpg')}
+            style = {styles.camera}
+            />
+          </TouchableOpacity>
+          </View>
           <View style = {styles.parameter}>
           <Text style = {{textDecorationLine: 'underline', fontSize: 18}}>Profile Name: </Text>
           <Text>{router.params.param1}</Text>
@@ -165,13 +173,19 @@ const styles = StyleSheet.create ({
       position: 'absolute',
       zIndex: 2
     },
+    camera : {
+     width: 50,
+     height: 50,
+     borderRadius: 40,
+     marginTop: 19
+    },
     profileelement: {
       marginHorizontal: 15,
       backgroundColor: '#994D1C',
       width: 310,
       borderRadius: 20,
       alignItems: 'center',
-      height: 350
+      height: 500
     },
     profileoption: {
       position: 'absolute',
@@ -197,6 +211,7 @@ const styles = StyleSheet.create ({
       marginTop: 20,
       marginHorizontal: 10,
       borderRadius: 30,
+      marginVertical: 10
     },
     header_images: {
       display: 'flex',

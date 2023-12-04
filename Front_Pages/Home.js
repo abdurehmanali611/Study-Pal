@@ -2,8 +2,10 @@ import { View, Text,
   Image, StyleSheet, 
   ScrollView, TouchableOpacity} 
   from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRoute } from '@react-navigation/native'
+import * as ImagePicker from 'expo-image-picker'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Home = ({navigation}) =>{
 
@@ -13,6 +15,17 @@ const Home = ({navigation}) =>{
   const [profilebtn, setProfilebtn] = useState(true)
   const [profiles, setProfiles] = useState(false)
   const [pages, setPages] = useState(false)
+  const [profilephoto, setProfilePhoto] = useState(require('../assets/profile.png'))
+
+  useEffect(() => {
+    (async () => {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+            alert('Sorry, we need camera roll permissions to make this work!');
+        }
+    }),
+    getProfile();
+}, []);
 
   const menupressed = () => {
 
@@ -21,16 +34,50 @@ const Home = ({navigation}) =>{
 
   }
 
-  const registerprofile = () => {
-
-     navigation.navigate('Profile')
-  }
-
   const profilepressed = () => {
 
     setProfiles(!profiles)
     setProfilebtn(!profilebtn)
 
+  }
+
+  const selectprofile = async () => {
+
+    let result  = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1
+    });
+    if (!result.canceled) {
+      setProfilePhoto(result.assets);
+      try {
+        await AsyncStorage.setItem('profile', JSON.stringify(result.assets));
+    } catch (error) {
+        console.error('Error saving profile image to AsyncStorage:', error);
+    }
+  }
+  
+   }
+
+   const getProfile = async () => {
+
+    try {
+      const storedImage = await AsyncStorage.getItem('profilephoto');
+      if (storedImage !== null) {
+            let profileImage = storedImage
+            try {
+              profileImage = JSON.parse(storedImage);
+            } catch (error) {
+              console.error('Error parsing stored data:', error);
+            }
+            setProfilePhoto(profileImage)
+      }else {
+        console.log("NO image selected")
+      }
+    } catch (error) {
+        console.error('Error retrieving profile image from AsyncStorage:', error);
+    }
   }
 
   return <ScrollView>
@@ -46,43 +93,42 @@ const Home = ({navigation}) =>{
             />
           </TouchableOpacity>
           <View style = {styles.profileelement}>
-          <View style = {{display: 'flex', flexDirection: 'row'}}>
-          <TouchableOpacity onPress={registerprofile}>
-            <Image
-            source={require('../assets/profile.png')}
-            style = {styles.back}
+            <View>
+               <Image source={profilephoto}
+               style = {styles.secprofile}
             />
-          </TouchableOpacity>
-          <TouchableOpacity>
+            </View>
+          <View style = {styles.camerahome}>
+          <TouchableOpacity onPress={selectprofile}>
             <Image
             source={require('../assets/camera.jpg')}
             style = {styles.camera}
             />
           </TouchableOpacity>
-          </View>
+            </View>
           <View style = {styles.parameter}>
           <Text style = {{textDecorationLine: 'underline', fontSize: 18}}>Profile Name: </Text>
-          <Text>{router.params.param1}</Text>
+          <Text adjustsFontSizeToFit>{router.params.param1}</Text>
           </View>
           <View style = {styles.parameter}>
           <Text style = {{textDecorationLine: 'underline', fontSize: 18}}>Last Name: </Text>
-          <Text>{router.params.param2}</Text>
+          <Text adjustsFontSizeToFit>{router.params.param2 }</Text>
           </View>
           <View style = {styles.parameter}>
           <Text style = {{textDecorationLine: 'underline', fontSize: 18}}>Email: </Text>
-          <Text>{router.params.param3}</Text>
+          <Text adjustsFontSizeToFit>{router.params.param3 }</Text>
           </View>
           <View style = {styles.parameter}>
           <Text style = {{textDecorationLine: 'underline', fontSize: 18}}>Password: </Text>
-          <Text>{router.params.param4}</Text>
+          <Text adjustsFontSizeToFit>{router.params.param4 }</Text>
           </View>
           <View style = {styles.parameter}>
           <Text style = {{textDecorationLine: 'underline', fontSize: 18}}>University: </Text>
-          <Text>{router.params.param5}</Text>
+          <Text adjustsFontSizeToFit style = {{color: 'green'}}>{router.params.param5 }</Text>
           </View>
           <View>
           <Text style = {{textAlign: 'center',textDecorationLine: 'underline', fontSize: 18}}>Biography: </Text>
-          <Text style = {{marginHorizontal: 5}}>{router.params.param6}</Text>
+          <Text style = {{marginHorizontal: 5}} adjustsFontSizeToFit>{router.params.param6  }</Text>
           </View>
           </View>
           </View>
@@ -169,22 +215,32 @@ const styles = StyleSheet.create ({
         marginHorizontal: 20, 
         marginVertical: 20
     },
+    camerahome: {
+     marginTop: -19,
+     marginBottom: 10,
+     marginLeft: 35
+    },
     menuoption: {
       position: 'absolute',
       zIndex: 2
     },
     camera : {
-     width: 50,
-     height: 50,
-     borderRadius: 40,
-     marginTop: 19
+     width: 40,
+     height: 40,
+     borderRadius: 40
+    },
+    secprofile: {
+      width: 70,
+      height: 60,
+      marginTop: 20,
+      borderRadius: 30,
+      marginVertical: 10
     },
     profileelement: {
       marginHorizontal: 15,
       backgroundColor: '#994D1C',
-      width: 310,
+      width: 370,
       borderRadius: 20,
-      alignItems: 'center',
       height: 500
     },
     profileoption: {
@@ -228,7 +284,8 @@ const styles = StyleSheet.create ({
     },
     parameter: {
      display: 'flex',
-     flexDirection: 'row'
+     flexDirection: 'row',
+     marginHorizontal: 20
     },
     title: {
       textAlign: 'center', 

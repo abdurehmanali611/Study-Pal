@@ -1,6 +1,7 @@
 import { View, Text, 
   Image, StyleSheet, 
-  ScrollView, TouchableOpacity} 
+  ScrollView, TouchableOpacity,
+  Animated} 
   from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useRoute } from '@react-navigation/native'
@@ -9,7 +10,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Home = ({navigation}) =>{
 
+  const uri = 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.shutterstock.com%2Fsearch%2Fsheikh-jamil-halim&psig=AOvVaw32VfCPN42BOoDFc8yzT4dF&ust=1702620823499000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCNDSlYCjjoMDFQAAAAAdAAAAABAD'
+
   const router = useRoute()
+  this.animtedvalue = new Animated.Value(0);
 
   const [menubtn, setMenubtn] = useState(true)
   const [profilebtn, setProfilebtn] = useState(true)
@@ -27,6 +31,14 @@ const Home = ({navigation}) =>{
     getProfile();
 }, []);
 
+startAnimation = () => {
+  Animated.timing(this.animtedvalue, {
+    toValue: 1,
+    duration: 1000,
+    useNativeDriver: true
+  }).start() 
+  
+}
   const menupressed = () => {
 
       setMenubtn(!menubtn)
@@ -46,13 +58,13 @@ const Home = ({navigation}) =>{
     let result  = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [4, 4],
       quality: 1
     });
     if (!result.canceled) {
-      setProfilePhoto(result.assets);
+      setProfilePhoto(result.uri);
       try {
-        await AsyncStorage.setItem('profile', JSON.stringify(result.assets));
+        await AsyncStorage.setItem('profile', result.uri);
     } catch (error) {
         console.error('Error saving profile image to AsyncStorage:', error);
     }
@@ -65,13 +77,7 @@ const Home = ({navigation}) =>{
     try {
       const storedImage = await AsyncStorage.getItem('profilephoto');
       if (storedImage !== null) {
-            let profileImage = storedImage
-            try {
-              profileImage = JSON.parse(storedImage);
-            } catch (error) {
-              console.error('Error parsing stored data:', error);
-            }
-            setProfilePhoto(profileImage)
+            setProfilePhoto(storedImage)
       }else {
         console.log("NO image selected")
       }
@@ -79,8 +85,10 @@ const Home = ({navigation}) =>{
         console.error('Error retrieving profile image from AsyncStorage:', error);
     }
   }
-
-  return <ScrollView>
+    
+  
+  return <ScrollView style = {{animtedvalue}}>
+    
     <View>
     <View style = {styles.header_images}>
         <View style = {styles.profileoption}> 

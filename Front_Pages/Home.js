@@ -62,9 +62,9 @@ startAnimation = () => {
       quality: 1
     });
     if (!result.canceled) {
-      setProfilePhoto(result.uri);
+      setProfilePhoto(result.assets);
       try {
-        await AsyncStorage.setItem('profile', result.uri);
+        await AsyncStorage.setItem('profile', JSON.stringify(result.assets));
     } catch (error) {
         console.error('Error saving profile image to AsyncStorage:', error);
     }
@@ -166,21 +166,25 @@ startAnimation = () => {
                />
               </TouchableOpacity>
               <TouchableOpacity 
+              onPress={() => navigation.navigate('software')}
               style = {styles.menuelement}
               >
                 <Text style = {styles.textmenu}>Software Engineering</Text>
               </TouchableOpacity>
               <TouchableOpacity
+              onPress={() => navigation.navigate('computer')}
               style = {styles.menuelement}
               >
                 <Text style = {styles.textmenu}>Computer Science</Text>
               </TouchableOpacity>
               <TouchableOpacity
+              onPress={() => navigation.navigate('technology')}
               style = {styles.menuelement}
               >
                 <Text style = {styles.textmenu}>Infomation Technology</Text>
               </TouchableOpacity>
               <TouchableOpacity
+              onPress={() => navigation.navigate('information')}
               style = {styles.menuelement}
               >
                 <Text style = {styles.textmenu}>Information System</Text>

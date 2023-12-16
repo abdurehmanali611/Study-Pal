@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from "react-native";
+import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 const Profile_create = ({navigation}) => {
 

@@ -10,8 +10,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Home = ({navigation}) =>{
 
-  const uri = 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.shutterstock.com%2Fsearch%2Fsheikh-jamil-halim&psig=AOvVaw32VfCPN42BOoDFc8yzT4dF&ust=1702620823499000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCNDSlYCjjoMDFQAAAAAdAAAAABAD'
-
   const router = useRoute()
   this.animtedvalue = new Animated.Value(0);
 
